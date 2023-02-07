@@ -1,5 +1,10 @@
 class OfficesController < ApplicationController
-  before_action :set_office, only: %i[show edit update]
+  before_action :authenticate_user!, except: %i[home]
+  before_action :set_office, only: %i[home show edit update]
+
+  # GET /offices/1/home
+  def home
+  end
 
   # GET /offices/1 or /offices/1.json
   def show

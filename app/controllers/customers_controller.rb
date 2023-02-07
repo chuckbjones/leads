@@ -12,7 +12,7 @@ class CustomersController < ApplicationController
 
     respond_to do |format|
       if @customer.save
-        format.html { redirect_to root_path, notice: "Customer was successfully created." }
+        format.html { redirect_to office_home_path(@customer.office), notice: "Thank you for your interest in our services. Someone from our local office will be contacting you shortly." }
       else
         format.html { render :new, status: :unprocessable_entity }
       end

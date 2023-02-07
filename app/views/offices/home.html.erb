@@ -1,0 +1,20 @@
+<div class="container mx-auto my-5 p-1 md:w-2/3 w-full shadow-xl rounded bg-white">
+  <%= turbo_frame_tag :root_frame do %>
+    <div class="mx-auto my-5 p-1 md:w-2/3 w-full flex">
+      <div class="mx-auto w-2/3">
+        <% if notice.present? %>
+          <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+        <% end %>
+
+        <p class="my-5 font-medium">Your local agency is</p>
+        <%= render @office %>
+
+        <div class="my-5">
+          <a href="<%= root_path %>" data-turbo-frame="_top">
+            <button class="bg-blue-600 hover:bg-blue-700 rounded-lg px-5 py-3 text-white text-sm leading-5 font-semibold">Home</button>
+          </a>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
