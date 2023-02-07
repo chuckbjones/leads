@@ -41,8 +41,7 @@ if ENV["SEED_PASSWORD"].present? && (Rails.env.development? || Rails.env.test?)
         password: ENV["SEED_PASSWORD"],
         password_confirmation: ENV["SEED_PASSWORD"]
       )
-
-    manager.add_role(:manager, office)
+    office.add_manager(manager)
 
     sales =
       User.create!(
@@ -50,7 +49,6 @@ if ENV["SEED_PASSWORD"].present? && (Rails.env.development? || Rails.env.test?)
         password: ENV["SEED_PASSWORD"],
         password_confirmation: ENV["SEED_PASSWORD"]
       )
-
-    sales.add_role(:sales, office)
+    office.add_sales_person(sales)
   end
 end

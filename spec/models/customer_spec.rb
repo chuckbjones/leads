@@ -23,4 +23,42 @@ RSpec.describe Customer, type: :model do
       expect(customer.errors[:state]).to include(/blank/)
     end
   end
+
+  describe "assign_sales_person" do
+    it "assigns the given sales person to the customer" do
+      office = create(:office, state: "CO")
+      user = create(:user)
+      office.add_sales_person(user)
+      customer = create(:customer, state: "CO")
+      customer.assign_sales_person!(user)
+
+      expect(customer.sales_person).to eq user
+    end
+
+    it "replaces the sales person when called a secon time" do
+      office = create(:office, state: "CO")
+      customer = create(:customer, state: "CO")
+      alice = create(:user, email: "alice@example.com")
+      office.add_sales_person(alice)
+      customer.assign_sales_person!(alice)
+
+      expect(customer.sales_person).to eq alice
+
+      bob = create(:user, email: "bob@example.com")
+      office.add_sales_person(bob)
+      customer.assign_sales_person!(bob)
+
+      expect(customer.sales_person).to eq bob
+    end
+
+    it "raises an error if the user is invalid" do
+      create(:office, state: "TX")
+      office = create(:office, state: "CO")
+      customer = create(:customer, state: "TX")
+      user = create(:user)
+      office.add_sales_person(user)
+
+      expect { customer.assign_sales_person!(user) }.to raise_error(/cannot be assigned to customer/)
+    end
+  end
 end
