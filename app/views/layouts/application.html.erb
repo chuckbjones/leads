@@ -10,9 +10,18 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   </head>
 
-  <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
+  <body class="bg-slate-800">
+    <div class="container mx-auto p-1">
+      <h1 class="font-bold text-4xl text-white">Crimson Permanent Assurance</h1>
+      <div class="container mx-auto my-5 p-6">
+        <% if notice || alert %>
+          <div class="container mx-auto my-5 p-1 md:w-2/3 w-full shadow-xl rounded bg-white">
+            <p class="notice"><%= notice %></p>
+            <p class="alert"><%= alert %></p>
+          </div>
+        <% end %>
+        <%= yield %>
+      </div>
+    </div>
   </body>
 </html>
