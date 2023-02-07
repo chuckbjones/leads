@@ -1,6 +1,7 @@
 class OfficesController < ApplicationController
   before_action :authenticate_user!, except: %i[home]
   before_action :set_office, only: %i[home show edit update]
+  before_action :authorize_for_office, only: %i[home show edit update]
 
   # GET /offices/1/home
   def home
@@ -30,6 +31,10 @@ class OfficesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_office
     @office = Office.find(params[:id])
+  end
+
+  def authorize_for_office
+    authorize @office
   end
 
   # Only allow a list of trusted parameters through.
