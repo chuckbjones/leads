@@ -43,9 +43,9 @@ RSpec.describe "/customers", type: :request do
         }.to change(Customer, :count).by(1)
       end
 
-      it "redirects to the root" do
+      it "redirects to the office url" do
         post customers_url, params: {customer: valid_attributes}
-        expect(response).to redirect_to(root_url)
+        expect(response).to redirect_to(%r{/offices/\d+/home})
       end
     end
 

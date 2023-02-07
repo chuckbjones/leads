@@ -26,8 +26,11 @@ RSpec.describe "/offices", type: :request do
 
   describe "GET /show" do
     it "renders a successful response" do
-      sign_in_as_a_valid_user
       office = Office.create! valid_attributes
+      user = create(:user)
+      user.add_role(:manager, office)
+      sign_in_as_a_valid_user(user)
+
       get office_url(office)
       expect(response).to be_successful
     end
@@ -35,8 +38,11 @@ RSpec.describe "/offices", type: :request do
 
   describe "GET /edit" do
     it "renders a successful response" do
-      sign_in_as_a_valid_user
       office = Office.create! valid_attributes
+      user = create(:user)
+      user.add_role(:manager, office)
+      sign_in_as_a_valid_user(user)
+
       get edit_office_url(office)
       expect(response).to be_successful
     end
@@ -49,16 +55,22 @@ RSpec.describe "/offices", type: :request do
       }
 
       it "updates the requested office" do
-        sign_in_as_a_valid_user
         office = Office.create! valid_attributes
+        user = create(:user)
+        user.add_role(:manager, office)
+        sign_in_as_a_valid_user(user)
+
         patch office_url(office), params: {office: new_attributes}
         office.reload
         expect(office.name).to eq("New Name")
       end
 
       it "redirects to the office" do
-        sign_in_as_a_valid_user
         office = Office.create! valid_attributes
+        user = create(:user)
+        user.add_role(:manager, office)
+        sign_in_as_a_valid_user(user)
+
         patch office_url(office), params: {office: new_attributes}
         office.reload
         expect(response).to redirect_to(office_url(office))
@@ -67,8 +79,11 @@ RSpec.describe "/offices", type: :request do
 
     context "with invalid parameters" do
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
-        sign_in_as_a_valid_user
         office = Office.create! valid_attributes
+        user = create(:user)
+        user.add_role(:manager, office)
+        sign_in_as_a_valid_user(user)
+
         patch office_url(office), params: {office: invalid_attributes}
         expect(response).to have_http_status(:unprocessable_entity)
       end
