@@ -2,10 +2,7 @@ require "rails_helper"
 
 RSpec.describe "offices/show", type: :view do
   before(:each) do
-    assign(:office, Office.create!(
-      name: "Name",
-      state: "State"
-    ))
+    assign(:office, create(:office))
   end
 
   it "renders attributes in <p>" do

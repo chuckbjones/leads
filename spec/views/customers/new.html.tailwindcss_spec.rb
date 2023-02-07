@@ -2,12 +2,7 @@ require "rails_helper"
 
 RSpec.describe "customers/new", type: :view do
   before(:each) do
-    assign(:customer, Customer.new(
-      name: "MyString",
-      email: "MyString",
-      phone: "MyString",
-      state: "MyString"
-    ))
+    assign(:customer, build(:customer))
   end
 
   it "renders new customer form" do

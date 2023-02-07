@@ -2,10 +2,7 @@ require "rails_helper"
 
 RSpec.describe "offices/edit", type: :view do
   let(:office) {
-    Office.create!(
-      name: "MyString",
-      state: "MyString"
-    )
+    create(:office)
   }
 
   before(:each) do

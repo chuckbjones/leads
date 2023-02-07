@@ -17,86 +17,47 @@ RSpec.describe "/offices", type: :request do
   # Office. As you add validations to Office, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    attributes_for(:office)
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    attributes_for(:office, state: "XX")
   }
-
-  describe "GET /index" do
-    it "renders a successful response" do
-      Office.create! valid_attributes
-      get offices_url
-      expect(response).to be_successful
-    end
-  end
 
   describe "GET /show" do
     it "renders a successful response" do
+      sign_in_as_a_valid_user
       office = Office.create! valid_attributes
       get office_url(office)
       expect(response).to be_successful
     end
   end
 
-  describe "GET /new" do
-    it "renders a successful response" do
-      get new_office_url
-      expect(response).to be_successful
-    end
-  end
-
   describe "GET /edit" do
     it "renders a successful response" do
+      sign_in_as_a_valid_user
       office = Office.create! valid_attributes
       get edit_office_url(office)
       expect(response).to be_successful
     end
   end
 
-  describe "POST /create" do
-    context "with valid parameters" do
-      it "creates a new Office" do
-        expect {
-          post offices_url, params: {office: valid_attributes}
-        }.to change(Office, :count).by(1)
-      end
-
-      it "redirects to the created office" do
-        post offices_url, params: {office: valid_attributes}
-        expect(response).to redirect_to(office_url(Office.last))
-      end
-    end
-
-    context "with invalid parameters" do
-      it "does not create a new Office" do
-        expect {
-          post offices_url, params: {office: invalid_attributes}
-        }.to change(Office, :count).by(0)
-      end
-
-      it "renders a response with 422 status (i.e. to display the 'new' template)" do
-        post offices_url, params: {office: invalid_attributes}
-        expect(response).to have_http_status(:unprocessable_entity)
-      end
-    end
-  end
-
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {name: "New Name"}
       }
 
       it "updates the requested office" do
+        sign_in_as_a_valid_user
         office = Office.create! valid_attributes
         patch office_url(office), params: {office: new_attributes}
         office.reload
-        skip("Add assertions for updated state")
+        expect(office.name).to eq("New Name")
       end
 
       it "redirects to the office" do
+        sign_in_as_a_valid_user
         office = Office.create! valid_attributes
         patch office_url(office), params: {office: new_attributes}
         office.reload
@@ -106,25 +67,11 @@ RSpec.describe "/offices", type: :request do
 
     context "with invalid parameters" do
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
+        sign_in_as_a_valid_user
         office = Office.create! valid_attributes
         patch office_url(office), params: {office: invalid_attributes}
         expect(response).to have_http_status(:unprocessable_entity)
       end
-    end
-  end
-
-  describe "DELETE /destroy" do
-    it "destroys the requested office" do
-      office = Office.create! valid_attributes
-      expect {
-        delete office_url(office)
-      }.to change(Office, :count).by(-1)
-    end
-
-    it "redirects to the offices list" do
-      office = Office.create! valid_attributes
-      delete office_url(office)
-      expect(response).to redirect_to(offices_url)
     end
   end
 end

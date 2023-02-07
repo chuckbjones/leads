@@ -1,6 +1,6 @@
 class UsStateValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
-    record.errors[attribute] << (options[:message] || "is invalid") unless UsStateValidator.valid_state?(value)
+    record.errors.add(attribute, (options[:message] || "is invalid")) unless UsStateValidator.valid_state?(value)
   end
 
   def self.valid_state?(value)
